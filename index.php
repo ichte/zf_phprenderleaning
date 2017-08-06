@@ -39,7 +39,8 @@ $data = [
 ];
 
 //Render HTML
-$html = $renderer->render('folderother/hello4',$data);
-
-echo $html;
+echo $renderer->render('hello1',$data);
+echo $renderer->render('hello2',$data);  
+echo $renderer->render('hello3',$data);  
+echo $renderer->render('folderother/hello4',$data);  
 
