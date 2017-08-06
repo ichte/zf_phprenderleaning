@@ -22,9 +22,9 @@ $stack = new Resolver\TemplatePathStack([
 
 // Gom lại các Resolver
 $resolver
-    ->attach($map)    // this will be consulted first, and is the fastest lookup
-    ->attach($stack)  // filesystem-based lookup
-    ->attach(new Resolver\RelativeFallbackResolver($map)) // allow short template names
+    ->attach($map)    // PhpRenderer tìm các file từ map này trước, tìm thấy sẽ không tìm cái khác
+    ->attach($stack)  // Cho phép tìm theo cấu trúc thư mục, bắt đầu với các thư mục khai báo tại script_paths
+    ->attach(new Resolver\RelativeFallbackResolver($map)) //Cài đặt để tìm tên ngắn
     ->attach(new Resolver\RelativeFallbackResolver($stack));
 	
 	 
@@ -39,8 +39,8 @@ $data = [
 ];
 
 //Render HTML
-echo $renderer->render('hello1',$data);
-echo $renderer->render('hello2',$data);  
-echo $renderer->render('hello3',$data);  
-echo $renderer->render('folderother/hello4',$data);  
+echo $renderer->render('hello1',$data);  //Tìm thấy hello1 từ $map, sẽ render script này
+echo $renderer->render('hello2',$data);  //Tìm thấy hello2 từ $map, sẽ render script này
+echo $renderer->render('hello3',$data);  //Không tìm thấy hello3 từ map, bắt đầu quét trong thư mục từ script_paths của $stack, thấy hello3.phtml trong viewfolder, sẽ nạp và render file này.
+echo $renderer->render('folderother/hello4',$data);  //Tương tự hello3
 
